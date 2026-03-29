@@ -10,6 +10,8 @@ gem 'importmap-rails'
 gem 'turbo-rails'
 gem 'stimulus-rails'
 gem 'jbuilder'
+gem 'inertia_rails', '~> 3.19'
+gem 'vite_rails', '~> 3.10'
 
 gem 'tzinfo-data', platforms: %i[ windows jruby ]
 

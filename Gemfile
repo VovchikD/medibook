@@ -12,6 +12,11 @@ gem 'stimulus-rails'
 gem 'jbuilder'
 gem 'inertia_rails', '~> 3.19'
 gem 'vite_rails', '~> 3.10'
+gem 'rodauth-rails', '~> 2.1'
+gem 'sequel', '~> 5'
+gem 'sequel-activerecord_connection', '~> 2.0', require: false
+gem 'bcrypt', '~> 3.1', require: false
+gem 'tilt', '~> 2.4', require: false
 
 gem 'tzinfo-data', platforms: %i[ windows jruby ]
 

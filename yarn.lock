@@ -766,6 +766,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"daisyui@npm:^5.5.19":
+  version: 5.5.19
+  resolution: "daisyui@npm:5.5.19"
+  checksum: 10c0/10e33c5e602b491b6e82e369fd08f1737359a327361cd464e87e2bf9e14e0601bf362db03e6846ae398f76d3f2cf524e071d3fec85b18d6637faddd628d2a10a
+  languageName: node
+  linkType: hard
+
 "debug@npm:4, debug@npm:^4.3.4":
   version: 4.4.3
   resolution: "debug@npm:4.4.3"
@@ -1588,6 +1595,7 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.2.2"
     "@vitejs/plugin-vue": "npm:^6.0.5"
     axios: "npm:^1.14.0"
+    daisyui: "npm:^5.5.19"
     tailwindcss: "npm:^4.2.2"
     vite: "npm:^8.0.3"
     vite-plugin-ruby: "npm:^5.2.1"

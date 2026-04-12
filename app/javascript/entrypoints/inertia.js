@@ -1,7 +1,20 @@
 import { createInertiaApp } from '@inertiajs/vue3'
+import { createApp, h } from 'vue'
+import Layout from '../layouts/Layout.vue'
 
 createInertiaApp({
   pages: "../pages",
+
+  setup({ el, App, props, plugin }) {
+    createApp({
+      render: () =>
+        h(Layout, null, {
+          default: () => h(App, props),
+        }),
+    })
+      .use(plugin)
+      .mount(el)
+  },
 
   defaults: {
     form: {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_05_104532) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_14_112100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -43,13 +43,29 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_05_104532) do
     t.string "fullname"
     t.string "password_hash"
     t.string "phone"
+    t.integer "role", default: 0
     t.integer "status", default: 1, null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
     t.check_constraint "email ~ '^[^,;@ \r\n]+@[^,@; \r\n]+.[^,@; \r\n]+$'::citext", name: "valid_email"
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "doctor_id"
+    t.datetime "end_time", null: false
+    t.string "notes"
+    t.bigint "patient_id"
+    t.datetime "start_time", null: false
+    t.integer "status"
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
+    t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
 
   add_foreign_key "account_login_change_keys", "accounts", column: "id"
   add_foreign_key "account_password_reset_keys", "accounts", column: "id"
   add_foreign_key "account_remember_keys", "accounts", column: "id"
   add_foreign_key "account_verification_keys", "accounts", column: "id"
+  add_foreign_key "appointments", "accounts", column: "doctor_id"
+  add_foreign_key "appointments", "accounts", column: "patient_id"
 end

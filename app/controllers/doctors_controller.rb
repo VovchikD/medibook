@@ -14,4 +14,11 @@ class DoctorsController < BaseController
       doctor: doctor
     }
   end
+
+  def appointments
+    appointments = Appointment.where(doctor_id: params[:id])
+                               .where(start_time: params[:start]..params[:end])
+
+    render json: appointments.map { |a| AppointmentPresenter.new(a).as_json }
+  end
 end

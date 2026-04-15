@@ -2,13 +2,13 @@
 
 class AppointmentsController < BaseController
   def index
-    appointments = Appointment.where(doctor_id: params[:doctor_id])
-                               .where(start_time: params[:start]..params[:end])
-    render json: appointments.as_json(
-      include: {
-        patient: { only: [ :id, :fullname ] }
+    appointments = current_account.patient_appointments.includes(:doctor)
+
+    render inertia: 'appointments/Index', props: {
+      appointments: appointments.map { |a|
+        AppointmentPresenter.new(a).as_json(:id, :doctor_name, :range_consultation)
       }
-    )
+    }
   end
 
   def create

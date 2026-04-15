@@ -106,13 +106,13 @@ const calendarOptions = {
   },
   events: async (fetchInfo, successCallback) => {
     const res = await fetch(
-      `/appointments?doctor_id=${props.doctorId}&start=${fetchInfo.startStr}&end=${fetchInfo.endStr}`
+      `/doctors/${props.doctorId}/appointments?start=${fetchInfo.startStr}&end=${fetchInfo.endStr}`
     )
 
     const data = await res.json()
     const events = data.map(a => ({
       id: a.id,
-      title: `${a.patient.fullname} - Consultation`,
+      title: a.patient_name,
       start: a.start_time,
       end: a.end_time,
       extendedProps: {

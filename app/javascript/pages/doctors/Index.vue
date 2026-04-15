@@ -1,24 +1,29 @@
 <template>
-  <div
-    v-for="doctor in doctors"
-    :key="doctor.id"
-    class="flex items-center justify-between"
-  >
-  <div class="card card-dash bg-base-100 w-96 m-6">
-    <div class="card-body p-6 space-y-4">
-        <p class="font-medium">
-          {{ doctor.fullname }}
-        </p>
+  <div class="p-6 space-y-4">
 
-        <button
-          class="btn btn-primary btn-sm"
-          @click.stop="goToDoctor(doctor.id)"
-        >
-          Schedule
-        </button>
+    <div
+      v-for="doctor in doctors"
+      :key="doctor.id"
+      class="card card-dash bg-base-100 w-full"
+    >
+      <div class="card-body p-6">
+
+        <div class="flex justify-between items-center">
+          <p class="font-medium">
+            {{ doctor.fullname }}
+          </p>
+
+          <button
+            class="btn btn-primary btn-sm"
+            @click="goToDoctor(doctor.id)"
+          >
+            Schedule
+          </button>
+        </div>
+
       </div>
-
     </div>
+
   </div>
 </template>
 

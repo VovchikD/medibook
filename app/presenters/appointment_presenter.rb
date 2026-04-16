@@ -9,6 +9,7 @@ class AppointmentPresenter
     end_time
     notes
     range_consultation
+    doctor_id
   ].freeze
 
   def initialize(appointment)
@@ -41,6 +42,10 @@ class AppointmentPresenter
 
   def range_consultation
     "#{@appointment.start_time.strftime('%d.%m')}: #{@appointment.start_time.strftime('%H:%M')} - #{@appointment.end_time.strftime('%H:%M')}"
+  end
+
+  def doctor_id
+    @appointment.doctor_id
   end
 
   def as_json(*fields)

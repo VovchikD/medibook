@@ -2,11 +2,11 @@
 
 class AppointmentsController < BaseController
   def index
-    appointments = current_account.patient_appointments.includes(:doctor)
-
     render inertia: 'appointments/Index', props: {
       appointments: appointments.map { |a|
-        AppointmentPresenter.new(a).as_json(:id, :doctor_name, :range_consultation)
+        AppointmentPresenter.new(a).as_json
+      },
+      doctors: doctors.map { |d| { id: d.id, fullname: d.fullname }
       }
     }
   end
@@ -40,6 +40,14 @@ class AppointmentsController < BaseController
   end
 
   private
+
+  def appointments
+    current_account.patient_appointments.includes(:doctor)
+  end
+
+  def doctors
+    Account.where(role: :doctor)
+  end
 
   def appointment_params
     params.require(:appointment).permit(:start_time, :end_time, :notes, :status, :doctor_id)

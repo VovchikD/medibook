@@ -3,8 +3,27 @@
     <div class="modal-box">
 
       <h3 class="font-bold text-lg mb-2">
-        Create Appointment
+        Edit Appointment
       </h3>
+
+      <div v-if="doctors?.length" class="mt-3">
+        <label class="label">
+          <span class="label-text">Doctor</span>
+        </label>
+
+        <select
+          v-model="selectedDoctorId"
+          class="select select-bordered w-full"
+        >
+          <option
+            v-for="doc in doctors"
+            :key="doc.id"
+            :value="doc.id"
+          >
+            {{ doc.fullname }}
+          </option>
+        </select>
+      </div>
 
       <input
         type="datetime-local"
@@ -19,30 +38,12 @@
 
       <textarea
         class="textarea textarea-bordered w-full mt-3"
-        placeholder="Notes..."
         v-model="notes"
       />
 
-      <div v-if="doctors" class="mt-3">
-        <select
-          v-model="selectedDoctorId"
-          class="select select-bordered w-full"
-        >
-          <option value="">Select doctor</option>
-
-          <option
-            v-for="doc in doctors"
-            :key="doc.id"
-            :value="doc.id"
-          >
-            {{ doc.fullname }}
-          </option>
-        </select>
-      </div>
-
       <div class="modal-action">
-        <button class="btn btn-primary" @click="saveCreate">
-          Save
+        <button class="btn btn-primary" @click="updateEvent">
+          Update
         </button>
 
         <button class="btn" @click="$emit('close')">
@@ -59,16 +60,18 @@ import { ref, watch } from 'vue'
 
 const props = defineProps({
   open: Boolean,
-  start: Date,
-  end: Date,
+  appointment: Object,
   doctors: Array
 })
 
-const emit = defineEmits(['save', 'close'])
-const notes = ref('')
+const emit = defineEmits(['update', 'close'])
+
 const localStart = ref(null)
 const localEnd = ref(null)
-const selectedDoctorId = ref('')
+const notes = ref('')
+const selectedDoctorId = ref(null)
+
+const DURATION = 30
 
 const formatDateTime = (date) => {
   if (!date) return ''
@@ -83,14 +86,15 @@ const formatDateTime = (date) => {
 }
 
 const onDateTimeChange = (value) => {
-  const newStart = new Date(value)
+  const start = new Date(value)
 
-  localStart.value = newStart
-  localEnd.value = new Date(newStart.getTime() + 30 * 60000)
+  localStart.value = start
+  localEnd.value = new Date(start.getTime() + DURATION * 60000)
 }
 
-const saveCreate = () => {
-  emit('save', {
+const updateEvent = () => {
+  emit('update', {
+    id: props.appointment.id,
     doctor_id: selectedDoctorId.value,
     start: localStart.value,
     end: localEnd.value,
@@ -99,16 +103,11 @@ const saveCreate = () => {
 }
 
 watch(() => props.open, (val) => {
-  if (val) {
-    notes.value = ''
-
-    if (props.start) {
-      localStart.value = new Date(props.start)
-    } else {
-      localStart.value = new Date()
-    }
-
-    localEnd.value = new Date(localStart.value.getTime() + 30 * 60000)
+  if (val && props.appointment) {
+    localStart.value = new Date(props.appointment.start_time)
+    localEnd.value = new Date(props.appointment.end_time)
+    notes.value = props.appointment.notes || ''
+    selectedDoctorId.value = props.appointment.doctor_id
   }
 })
 </script>

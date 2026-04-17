@@ -89,6 +89,8 @@ const updateNotes = ({ id, notes }) => {
 }
 
 const handleEventClick = (info) => {
+  if (info.event.extendedProps.busy) return
+
   selectedEvent.value = info.event
   notes.value = info.event.extendedProps.notes
   showViewModal.value = true
@@ -129,7 +131,6 @@ const isWithinSchedule = (date) => {
 const calendarOptions = {
   plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
 
-  editable: true,
   initialView: 'dayGridMonth',
   dateClick: handleDateClick,
   eventClick: handleEventClick,
@@ -148,11 +149,14 @@ const calendarOptions = {
     const data = await res.json()
     const events = data.map(a => ({
       id: a.id,
-      title: a.patient_name,
+      title: a.title,
       start: a.start_time,
       end: a.end_time,
+      editable: !a.busy,
+      backgroundColor: a.busy ? '#ef4444' : '',
       extendedProps: {
-        notes: a.notes
+        notes: a.notes,
+        busy: a.busy
       }
     }))
 

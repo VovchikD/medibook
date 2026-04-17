@@ -4,7 +4,7 @@ class AppointmentPresenter
   FIELDS = %i[
     id
     doctor_name
-    patient_name
+    title
     start_time
     end_time
     notes
@@ -24,7 +24,7 @@ class AppointmentPresenter
     @appointment.doctor.fullname
   end
 
-  def patient_name
+  def title
     "#{@appointment.patient.fullname} - Consultation"
   end
 
@@ -46,6 +46,10 @@ class AppointmentPresenter
 
   def doctor_id
     @appointment.doctor_id
+  end
+
+  def busy
+    false
   end
 
   def as_json(*fields)

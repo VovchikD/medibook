@@ -12,15 +12,14 @@ class DoctorSchedulesController < BaseController
   end
 
   def bulk_update
+    authorize current_account, :bulk_update?
+
     params[:schedules].each do |schedule|
       record = current_account.schedules.find_or_initialize_by(
         day_of_week: schedule[:day]
       )
 
-      record.update!(
-        start_time: schedule[:enabled] ? schedule[:start] : nil,
-        end_time: schedule[:enabled] ? schedule[:end] : nil,
-      )
+      update_record!(record, schedule)
     end
 
     head :ok
@@ -30,5 +29,12 @@ class DoctorSchedulesController < BaseController
 
   def doctor
     @doctor ||= Account.doctor.find_by(id: params[:id])
+  end
+
+  def update_record!(record, schedule)
+    record.update!(
+      start_time: schedule[:enabled] ? schedule[:start] : nil,
+      end_time: schedule[:enabled] ? schedule[:end] : nil,
+    )
   end
 end

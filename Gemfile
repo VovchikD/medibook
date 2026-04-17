@@ -28,6 +28,7 @@ gem 'bootsnap', require: false
 gem 'kamal', require: false
 gem 'thruster', require: false
 gem 'image_processing', '~> 1.2'
+gem 'pundit', '~> 2.5'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'

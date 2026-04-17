@@ -25,15 +25,10 @@ class DoctorsController < BaseController
   private
 
   def present_appointment(appointment)
-    if owns_appointment?(appointment)
+    if policy(appointment).show_appointment?
       AppointmentPresenter.new(appointment).as_json
     else
       BusyAppointmentPresenter.new(appointment).as_json
     end
-  end
-
-  def owns_appointment?(appointment)
-    appointment&.doctor == current_account ||
-      appointment&.patient == current_account
   end
 end

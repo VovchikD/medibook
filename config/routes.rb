@@ -23,7 +23,12 @@ Rails.application.routes.draw do
     get :appointments, on: :member
   end
 
+  resources :doctor_schedules, only: [ :show ] do
+    put :bulk_update, on: :collection
+  end
+
   mount RodauthApp => '/auth'
   get '/login', to: 'accounts#login'
   get '/register', to: 'accounts#register'
+  get '/profile', to: 'accounts#show'
 end

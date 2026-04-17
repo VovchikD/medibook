@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_14_112100) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_16_133245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -62,10 +62,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_14_112100) do
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
 
+  create_table "doctor_schedules", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "day_of_week"
+    t.bigint "doctor_id"
+    t.boolean "enabled", default: true
+    t.time "end_time"
+    t.time "start_time"
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_doctor_schedules_on_doctor_id"
+  end
+
   add_foreign_key "account_login_change_keys", "accounts", column: "id"
   add_foreign_key "account_password_reset_keys", "accounts", column: "id"
   add_foreign_key "account_remember_keys", "accounts", column: "id"
   add_foreign_key "account_verification_keys", "accounts", column: "id"
   add_foreign_key "appointments", "accounts", column: "doctor_id"
   add_foreign_key "appointments", "accounts", column: "patient_id"
+  add_foreign_key "doctor_schedules", "accounts", column: "doctor_id"
 end

@@ -8,4 +8,8 @@ class AccountsController < BaseController
   def register
     render inertia: 'accounts/Register'
   end
+
+  def show
+    render inertia: 'accounts/Profile', props: AccountPresenter.new(current_account).as_json(:id, :isDoctor)
+  end
 end

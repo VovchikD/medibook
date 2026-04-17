@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex-1 flex justify-center gap-6">
-      <Link href="/" class="btn btn-ghost">Account</Link>
+      <Link href="/profile" class="btn btn-ghost">Account</Link>
       <Link href="/doctors" class="btn btn-ghost">Doctors</Link>
       <Link href="/appointments" class="btn btn-ghost">Appointments</Link>
     </div>

@@ -19,7 +19,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -40,6 +41,7 @@ const showViewModal = ref(false)
 const showCreateModal = ref(false)
 const notes = ref('')
 const calendarRef = ref(null)
+const schedules = ref([])
 
 
 const props = defineProps({
@@ -47,6 +49,8 @@ const props = defineProps({
 })
 
 const handleDateClick = (info) => {
+  if (!isWithinSchedule(info.date)) return
+
   const start = info.date
   const end = new Date(start.getTime() + 30 * 60000)
 
@@ -90,6 +94,38 @@ const handleEventClick = (info) => {
   showViewModal.value = true
 }
 
+const loadWorkingHours = async () => {
+  const res = await axios.get(`/doctor_schedules/${props.doctorId}`)
+  schedules.value = res.data
+
+  calendarRef.value.getApi().setOption(
+    'businessHours',
+    mapToBusinessHours(schedules.value)
+  )
+}
+
+const mapToBusinessHours = (schedules) => {
+  return schedules
+    .filter(s => s.enabled)
+    .map(s => ({
+      daysOfWeek: [dayMap[s.day]],
+      startTime: s.start,
+      endTime: s.end
+    }))
+}
+
+const isWithinSchedule = (date) => {
+  const day = date.getDay()
+  const time = date.toTimeString()
+
+  return schedules.value.some(s =>
+    s.enabled &&
+    dayMap[s.day] === day &&
+    time >= s.start &&
+    time < s.end
+  )
+}
+
 const calendarOptions = {
   plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
 
@@ -131,4 +167,18 @@ const refetchEvents = () => {
 defineExpose({
   refetchEvents
 })
+
+onMounted(() => {
+  loadWorkingHours()
+})
+
+const dayMap = {
+  sunday: 0,
+  monday: 1,
+  tuesday: 2,
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6
+}
 </script>

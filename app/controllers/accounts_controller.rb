@@ -10,6 +10,6 @@ class AccountsController < BaseController
   end
 
   def show
-    render inertia: 'accounts/Profile', props: AccountPresenter.new(current_account).as_json(:id)
+    render inertia: 'accounts/Profile', props: AccountPresenter.new(current_account).as_json(:id, :isDoctor)
   end
 end

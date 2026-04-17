@@ -1,13 +1,19 @@
 <template>
   <div class="navbar bg-base-100 shadow">
     <div class="flex-1">
-      <a href="/" class="btn btn-ghost text-xl">Medibook</a>
+      <Link href="/" class="btn btn-ghost text-xl">Medibook</Link>
     </div>
 
-    <div class="flex-none gap-2">
+    <div class="flex-1 flex justify-center gap-6">
+      <Link href="/profile" class="btn btn-ghost">Account</Link>
+      <Link href="/doctors" class="btn btn-ghost">Doctors</Link>
+      <Link href="/appointments" class="btn btn-ghost">Appointments</Link>
+    </div>
+
+    <div class="flex-1 flex justify-end gap-2">
       <div v-if="!user">
-        <a href="/login" class="btn btn-ghost">Login</a>
-        <a href="/register" class="btn btn-primary">Register</a>
+        <Link href="/login" class="btn btn-ghost">Login</Link>
+        <Link href="/register" class="btn btn-primary">Register</Link>
       </div>
 
       <div v-else>
@@ -33,7 +39,7 @@
 </template>
 
 <script setup>
-import { usePage } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import axios from 'axios'
 

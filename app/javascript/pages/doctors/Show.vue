@@ -12,7 +12,7 @@
 <script setup>
 import Fullcalendar from '../../components/Fullcalendar.vue';
 import { ref } from 'vue'
-import axios from 'axios'
+import axios from '../../lib/axios'
 
 const calendarRef = ref(null)
 

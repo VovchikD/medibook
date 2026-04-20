@@ -7,12 +7,11 @@
 </template>
 
 <script setup>
-import axios from 'axios'
+import axios from '../../lib/axios'
 import { ref, onMounted } from 'vue';
 import ScheduleForm from '../../components/doctors/ScheduleForm.vue';
 
 const schedules = ref([])
-const id = ref('')
 
 const props = defineProps({
   id: Number,
@@ -20,7 +19,7 @@ const props = defineProps({
 })
 
 const loadWorkingHours = async () => {
-  const res = await axios.get(`/doctor_schedules/${id}`)
+  const res = await axios.get(`/doctor_schedules/${props.id}`)
   schedules.value = res.data
 }
 

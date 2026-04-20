@@ -1660,6 +1660,7 @@ __metadata:
     vite: "npm:^8.0.3"
     vite-plugin-ruby: "npm:^5.2.1"
     vue: "npm:^3.5.31"
+    vue3-toastify: "npm:^0.2.9"
   languageName: unknown
   linkType: soft
 
@@ -1840,6 +1841,18 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 10c0/bed9520358080393a02fe22565b3309b4b3b8f916afe4c97577528f3efb05c1bf4b29f7b552179bc5b3938629e50fbd316231727457411dbc96648fa5c9d14bf
+  languageName: node
+  linkType: hard
+
+"vue3-toastify@npm:^0.2.9":
+  version: 0.2.9
+  resolution: "vue3-toastify@npm:0.2.9"
+  peerDependencies:
+    vue: ">=3.2.0"
+  peerDependenciesMeta:
+    vue:
+      optional: true
+  checksum: 10c0/c98ed6b2ba5d33f70a2a597dcf3ceb04ae28904f99d1d588aed16c1c1d8cdf8af1684f682045d7c68bf1eab732ae8edb96f6407cc0b8561bbf82f898b657a9ba
   languageName: node
   linkType: hard
 

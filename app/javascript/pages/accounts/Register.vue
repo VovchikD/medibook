@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import axios from 'axios'
+import axios from '../../lib/axios'
 import { reactive } from 'vue'
 
 const form = reactive({

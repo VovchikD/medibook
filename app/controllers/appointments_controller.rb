@@ -2,6 +2,8 @@
 
 class AppointmentsController < BaseController
   def index
+    authorize Appointment, :index?
+
     render inertia: 'appointments/Index', props: {
       appointments: appointments.map { |a|
         AppointmentPresenter.new(a).as_json
@@ -12,8 +14,8 @@ class AppointmentsController < BaseController
   end
 
   def create
-    appointment = Appointment.new(appointment_params)
-    appointment.patient = current_account
+    appointment = Appointment.new(appointment_params.merge(patient_id: current_account.id))
+    authorize appointment, :create?
 
     if appointment.save
       render json: appointment
@@ -24,6 +26,7 @@ class AppointmentsController < BaseController
 
   def update
     appointment = set_appointment
+    authorize appointment, :update?
 
     if appointment.update(appointment_params)
       render json: appointment
@@ -34,6 +37,7 @@ class AppointmentsController < BaseController
 
   def destroy
     appointment = set_appointment
+    authorize appointment, :destroy?
     appointment.destroy!
 
     head :ok

@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import axios from 'axios'
+import axios from '../../lib/axios'
 import { ref, onMounted } from 'vue';
 import ScheduleForm from '../../components/doctors/ScheduleForm.vue';
 

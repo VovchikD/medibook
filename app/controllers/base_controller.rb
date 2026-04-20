@@ -14,8 +14,7 @@ class BaseController < ApplicationController
 
   inertia_share do
     {
-      user: current_account,
-      flash: { alert: flash[:alert] }
+      user: current_account
     }
   end
 
@@ -38,7 +37,8 @@ class BaseController < ApplicationController
   private
 
   def user_not_authorized
-    redirect_back fallback_location: root_path,
-      alert: 'You are not authorized to perform this action.'
+    respond_to do |format|
+      format.json { render json: { error: 'You are not authorized to perform this action.' }, status: :forbidden }
+    end
   end
 end

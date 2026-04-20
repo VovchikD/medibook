@@ -41,7 +41,7 @@
 <script setup>
 import { usePage, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
-import axios from 'axios'
+import axios from '../lib/axios'
 
 const user = computed(() => usePage().props?.user ?? null)
 const logout = async () => {

@@ -1,6 +1,7 @@
 import { createInertiaApp } from '@inertiajs/vue3'
 import { createApp, h } from 'vue'
 import Layout from '../layouts/Layout.vue'
+import '../lib/axios'
 
 createInertiaApp({
   pages: "../pages",

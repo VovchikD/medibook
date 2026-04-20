@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-import axios from 'axios'
+import axios from '../../lib/axios'
 import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import CreateAppointmentModal from '../../components/modals/CreateAppointment.vue'
